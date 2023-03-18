@@ -4,21 +4,22 @@ from bullet import Bullet
 from ino import Ino
 import time
 
+
 def events(screen, ship, bullets):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-        elif event.type == pygame.KEYDOWN: # keydown
-            #right move ship
+        elif event.type == pygame.KEYDOWN:  # keydown
+            # right move ship
             if event.key == pygame.K_RIGHT:
                 ship.mright = True
-            #left move ship
+            # left move ship
             elif event.key == pygame.K_LEFT:
                 ship.mleft = True
             elif event.key == pygame.K_SPACE:
                 new_bullet = Bullet(screen, ship)
                 bullets.add(new_bullet)
-        elif event.type == pygame.KEYUP: #keyup
+        elif event.type == pygame.KEYUP:  # keyup
             if event.key == pygame.K_RIGHT:
                 ship.mright = False
             elif event.key == pygame.K_LEFT:
@@ -35,6 +36,7 @@ def update(background_image, screen, stats, score, ship, inos, bullets):
     inos.draw(screen)
     pygame.display.flip()
 
+
 def update_bullets(screen, stats, score, inos, bullets):
     """delete bullets"""
     bullets.update()
@@ -46,13 +48,14 @@ def update_bullets(screen, stats, score, inos, bullets):
     # check collision's dictionary for stats
     if collisions:
         for inos in collisions.values():
-                stats.score +=15 * len(inos)
+            stats.score += 15 * len(inos)
         score.image_score()
         check_high_score(stats, score)
 
     if len(inos) == 0:
         bullets.empty()
         create_army(screen, inos)
+
 
 def ship_kill(stats, screen, ship, inos, bullets):
     """contact ship and inos"""
@@ -67,12 +70,14 @@ def ship_kill(stats, screen, ship, inos, bullets):
         stats.run_game = False
         sys.exit()
 
+
 def update_inos(stats, screen, ship, inos, bullets):
     """moving enemy"""
     inos.update()
     if pygame.sprite.spritecollideany(ship, inos):
         ship_kill(stats, screen, ship, inos, bullets)
     inos_check(stats, screen, ship, inos, bullets)
+
 
 def inos_check(stats, screen, ship, inos, bullets):
     """check or army inos in the down screen"""
@@ -81,6 +86,7 @@ def inos_check(stats, screen, ship, inos, bullets):
         if ino.rect.bottom >= screen_rect.bottom:
             ship_kill(stats, screen, ship, inos, bullets)
             break
+
 
 def create_army(screen, inos):
     ino = Ino(screen)
@@ -97,6 +103,7 @@ def create_army(screen, inos):
             ino.rect.x = ino.x
             ino.rect.y = ino.rect.height + (ino.rect.height * row_number)
             inos.add(ino)
+
 
 def check_high_score(stats, sc):
     """check high score"""
