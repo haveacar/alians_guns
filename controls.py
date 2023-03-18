@@ -36,7 +36,7 @@ def update(bg_color, screen, stats, score, ship, inos, bullets):
     pygame.display.flip()
 
 def update_bullets(screen, stats, score, inos, bullets):
-    #delete bullets
+    """delete bullets"""
     bullets.update()
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
@@ -44,7 +44,8 @@ def update_bullets(screen, stats, score, inos, bullets):
 
     collisions = pygame.sprite.groupcollide(bullets, inos, True, True)
     if collisions:
-        stats.score +=15
+        for inos in collisions.values():
+                stats.score +=15 * len(inos)
         score.image_score()
 
     if len(inos) == 0:
