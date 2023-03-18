@@ -25,9 +25,9 @@ def events(screen, ship, bullets):
                 ship.mleft = False
 
 
-def update(bg_color, screen, stats, score, ship, inos, bullets):
+def update(background_image, screen, stats, score, ship, inos, bullets):
     """"Screen load"""
-    screen.fill(bg_color)
+    screen.blit(background_image, (0, 0))
     score.show_score()
     for bullet in bullets.sprites():
         bullet.draw_bullet()
