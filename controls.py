@@ -43,6 +43,7 @@ def update_bullets(screen, stats, score, inos, bullets):
             bullets.remove(bullet)
 
     collisions = pygame.sprite.groupcollide(bullets, inos, True, True)
+    # check collision's dictionary for stats
     if collisions:
         for inos in collisions.values():
                 stats.score +=15 * len(inos)
@@ -96,3 +97,4 @@ def create_army(screen, inos):
             ino.rect.x = ino.x
             ino.rect.y = ino.rect.height + (ino.rect.height * row_number)
             inos.add(ino)
+
