@@ -1,5 +1,5 @@
 class Stats():
-    #statics
+    """Static events"""
     def __init__(self):
         # int statistic
         self.reset_stats()
@@ -7,8 +7,8 @@ class Stats():
 
 
     def reset_stats(self):
-        # stats change
-        self.ships_left = 1
+        """stats change"""
+        self.ships_left = 2
 
 
 

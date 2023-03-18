@@ -40,7 +40,7 @@ def update_bullets(screen, inos, bullets):
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
-    # print(len(bullets))
+
     collisions = pygame.sprite.groupcollide(bullets, inos, True, True)
 
     if len(inos) == 0:
@@ -48,6 +48,7 @@ def update_bullets(screen, inos, bullets):
         create_army(screen, inos)
 
 def ship_kill(stats, screen, ship, inos, bullets):
+    """contact ship and inos"""
     if stats.ships_left > 0:
         stats.ships_left -= 1
         inos.empty()
@@ -60,14 +61,14 @@ def ship_kill(stats, screen, ship, inos, bullets):
         sys.exit()
 
 def update_inos(stats, screen, ship, inos, bullets):
-    #moving enemy
+    """moving enemy"""
     inos.update()
     if pygame.sprite.spritecollideany(ship, inos):
         ship_kill(stats, screen, ship, inos, bullets)
     inos_check(stats, screen, ship, inos, bullets)
 
 def inos_check(stats, screen, ship, inos, bullets):
-    #check or army inos in the down screen
+    """check or army inos in the down screen"""
     screen_rect = screen.get_rect()
     for ino in inos.sprites():
         if ino.rect.bottom >= screen_rect.bottom:
