@@ -4,7 +4,7 @@ class Stats():
         # int statistic
         self.reset_stats()
         self.run_game = True
-
+        self.high_score = 1000
 
     def reset_stats(self):
         """stats change"""

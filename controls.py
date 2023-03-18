@@ -43,10 +43,12 @@ def update_bullets(screen, stats, score, inos, bullets):
             bullets.remove(bullet)
 
     collisions = pygame.sprite.groupcollide(bullets, inos, True, True)
+    # check collision's dictionary for stats
     if collisions:
         for inos in collisions.values():
                 stats.score +=15 * len(inos)
         score.image_score()
+        check_high_score(stats, score)
 
     if len(inos) == 0:
         bullets.empty()
@@ -87,7 +89,6 @@ def create_army(screen, inos):
     ino_height = ino.rect.height
     number_ino_y = int((1000 - 500 - 2 * ino_height) / ino_height)
 
-
     for row_number in range(number_ino_y):
         for ino_number in range(number_ino_x):
             ino = Ino(screen)
@@ -96,3 +97,9 @@ def create_army(screen, inos):
             ino.rect.x = ino.x
             ino.rect.y = ino.rect.height + (ino.rect.height * row_number)
             inos.add(ino)
+
+def check_high_score(stats, sc):
+    """check high score"""
+    if stats.score > stats.high_score:
+        stats.high_score = stats.score
+        sc.image_high_score()
