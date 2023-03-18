@@ -25,16 +25,17 @@ def events(screen, ship, bullets):
                 ship.mleft = False
 
 
-def update(bg_color, screen, stats, ship, inos, bullets):
-    #Screen load
+def update(bg_color, screen, stats, score, ship, inos, bullets):
+    """"Screen load"""
     screen.fill(bg_color)
+    score.show_score()
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     ship.output()
     inos.draw(screen)
     pygame.display.flip()
 
-def update_bullets(screen, inos, bullets):
+def update_bullets(screen, stats, score, inos, bullets):
     #delete bullets
     bullets.update()
     for bullet in bullets.copy():
@@ -42,6 +43,9 @@ def update_bullets(screen, inos, bullets):
             bullets.remove(bullet)
 
     collisions = pygame.sprite.groupcollide(bullets, inos, True, True)
+    if collisions:
+        stats.score +=15
+        score.image_score()
 
     if len(inos) == 0:
         bullets.empty()
