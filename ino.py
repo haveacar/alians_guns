@@ -19,5 +19,5 @@ class Ino(pygame.sprite.Sprite):
 
     def update(self):
         """moving enemy"""
-        self.y += 0.3
+        self.y += 0.2
         self.rect.y = self.y
