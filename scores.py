@@ -22,7 +22,7 @@ class Scores:
 
     def image_high_score(self):
         """Rend text to graphic"""
-        self.high_score_image = self.font.render(str(self.stats.high_score), True, self.text_color, (0, 0, 0))
+        self.high_score_image = self.font.render(str(self.stats.high_score), True, "Gold", (0, 0, 0))
         self.high_score_rect = self.high_score_image.get_rect()
         self.high_score_rect.centerx = self.screen_rect.centerx
         self.high_score_rect.top = self.screen_rect.top + 20
