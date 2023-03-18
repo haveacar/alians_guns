@@ -25,6 +25,7 @@ def run():
     stats = Stats()
     score= Scores(screen, stats)
 
+    # main loop
     while True:
         controls.events(screen, ship, bullets)
         if stats.run_game:
