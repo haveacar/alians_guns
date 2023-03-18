@@ -6,6 +6,7 @@ from stats import Stats
 
 
 def run():
+    """main func"""
     pygame.init()
     screen = pygame.display.set_mode((1000, 750))
     pygame.display.set_caption("Aliens guns")

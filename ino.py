@@ -1,7 +1,7 @@
 import pygame
 
 class Ino(pygame.sprite.Sprite):
-    #class 1 Alian
+    """class Ino(computer player)"""
 
     def __init__(self, screen):
         super(Ino, self).__init__()
@@ -14,9 +14,10 @@ class Ino(pygame.sprite.Sprite):
         self.y = float(self.rect.y)
 
     def draw(self):
+        """draw enemy"""
         self.screen.blit(self.image, self.rect)
 
     def update(self):
-        #moving enemy
-        self.y += 0.5
+        """moving enemy"""
+        self.y += 0.3
         self.rect.y = self.y

@@ -1,7 +1,7 @@
 import pygame
 
 class Bullet(pygame.sprite.Sprite):
-
+    """class bullet"""
     def __init__(self, screen, ship):
       super(Bullet, self).__init__()
       self.screen = screen
@@ -13,9 +13,10 @@ class Bullet(pygame.sprite.Sprite):
       self.y = float(self.rect.y)
 
     def update(self):
-
+        """update bullet"""
         self.y -= self.speed
         self.rect.y = self.y
 
     def draw_bullet(self):
+        """draw bullet"""
         pygame.draw.rect(self.screen, self.color, self.rect)

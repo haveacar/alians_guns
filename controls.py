@@ -8,17 +8,17 @@ def events(screen, ship, bullets):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            #right
+        elif event.type == pygame.KEYDOWN: # keydown
+            #right move ship
             if event.key == pygame.K_RIGHT:
                 ship.mright = True
+            #left move ship
             elif event.key == pygame.K_LEFT:
                 ship.mleft = True
             elif event.key == pygame.K_SPACE:
                 new_bullet = Bullet(screen, ship)
                 bullets.add(new_bullet)
-        elif event.type == pygame.KEYUP:
-                #right
+        elif event.type == pygame.KEYUP: #keyup
             if event.key == pygame.K_RIGHT:
                 ship.mright = False
             elif event.key == pygame.K_LEFT:
