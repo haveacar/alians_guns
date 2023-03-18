@@ -6,8 +6,9 @@ from stats import Stats
 
 
 def run():
+    """main func"""
     pygame.init()
-    screen = pygame.display.set_mode((1000, 800))
+    screen = pygame.display.set_mode((1000, 750))
     pygame.display.set_caption("Aliens guns")
     bg_color = (75, 127, 173)
     ship = Ship(screen)

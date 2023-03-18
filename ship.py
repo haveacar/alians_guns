@@ -29,4 +29,5 @@ class Ship():
         self.rect.centerx = self.center
 
     def create_ship(self):
+        """create ship on center"""
         self.center = self.screen_rect.centerx
