@@ -70,7 +70,7 @@ def ship_kill(stats, screen, score, ship, inos, bullets):
         time.sleep(1)
     else:
         stats.run_game = False
-        sys.exit()
+        #sys.exit()
 
 
 def update_inos(stats, screen, score, ship, inos, bullets):
