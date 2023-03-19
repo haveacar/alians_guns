@@ -51,16 +51,18 @@ def update_bullets(screen, stats, score, inos, bullets):
             stats.score += 15 * len(inos)
         score.image_score()
         check_high_score(stats, score)
+        score.image_ships()
 
     if len(inos) == 0:
         bullets.empty()
         create_army(screen, inos)
 
 
-def ship_kill(stats, screen, ship, inos, bullets):
+def ship_kill(stats, screen, score, ship, inos, bullets):
     """contact ship and inos"""
     if stats.ships_left > 0:
         stats.ships_left -= 1
+        score.image_ships()
         inos.empty()
         bullets.empty()
         create_army(screen, inos)
@@ -71,20 +73,20 @@ def ship_kill(stats, screen, ship, inos, bullets):
         sys.exit()
 
 
-def update_inos(stats, screen, ship, inos, bullets):
+def update_inos(stats, screen, score, ship, inos, bullets):
     """moving enemy"""
     inos.update()
     if pygame.sprite.spritecollideany(ship, inos):
-        ship_kill(stats, screen, ship, inos, bullets)
-    inos_check(stats, screen, ship, inos, bullets)
+        ship_kill(stats, screen,score, ship, inos, bullets)
+    inos_check(stats, screen, score, ship, inos, bullets)
 
 
-def inos_check(stats, screen, ship, inos, bullets):
+def inos_check(stats, screen,score,  ship, inos, bullets):
     """check or army inos in the down screen"""
     screen_rect = screen.get_rect()
     for ino in inos.sprites():
         if ino.rect.bottom >= screen_rect.bottom:
-            ship_kill(stats, screen, ship, inos, bullets)
+            ship_kill(stats, screen, score, ship, inos, bullets)
             break
 
 
