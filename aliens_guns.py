@@ -32,7 +32,8 @@ def run():
             ship.update_ship()
             controls.update(background_image, screen, stats, score, ship, inos, bullets)
             controls.update_bullets(screen, stats, score, inos, bullets)
-            controls.update_inos(stats, screen, ship, inos, bullets)
+            controls.update_inos(stats, screen, score, ship, inos, bullets)
 
 
-run()
+if __name__ == '__main__':
+    run()

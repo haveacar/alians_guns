@@ -1,4 +1,6 @@
 import pygame.font
+from pygame.sprite import Group
+from ship import Ship
 
 
 class Scores:
@@ -12,6 +14,7 @@ class Scores:
         self.font = pygame.font.SysFont("Comic Sans MS", 38)
         self.image_score()
         self.image_high_score()
+        self.image_ships()
 
     def image_score(self):
         """Rend text to graphic"""
@@ -27,7 +30,17 @@ class Scores:
         self.high_score_rect.centerx = self.screen_rect.centerx
         self.high_score_rect.top = self.screen_rect.top + 20
 
+    def image_ships(self):
+        """ lives"""
+        self.ships = Group()
+        for next_ship in range(self.stats.ships_left):
+            ship = Ship(self.screen)
+            ship.rect.x =15 + next_ship*ship.rect.width
+            ship.rect.y =20
+            self.ships.add(ship)
+
     def show_score(self):
         """show score on screen"""
         self.screen.blit(self.score_img, self.score_rect)
         self.screen.blit(self.high_score_image, self.high_score_rect)
+        self.ships.draw(self.screen)
