@@ -35,4 +35,5 @@ def run():
             controls.update_inos(stats, screen, score, ship, inos, bullets)
 
 
-run()
+if __name__ == '__main__':
+    run()
