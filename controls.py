@@ -73,16 +73,15 @@ def ship_kill(stats, screen, score, ship, inos, bullets):
         stats.run_game = False
 
 
-
 def update_inos(stats, screen, score, ship, inos, bullets):
     """moving enemy"""
     inos.update()
     if pygame.sprite.spritecollideany(ship, inos):
-        ship_kill(stats, screen,score, ship, inos, bullets)
+        ship_kill(stats, screen, score, ship, inos, bullets)
     inos_check(stats, screen, score, ship, inos, bullets)
 
 
-def inos_check(stats, screen,score,  ship, inos, bullets):
+def inos_check(stats, screen, score, ship, inos, bullets):
     """check or army inos in the down screen"""
     screen_rect = screen.get_rect()
     for ino in inos.sprites():
@@ -93,6 +92,7 @@ def inos_check(stats, screen,score,  ship, inos, bullets):
 
 def create_army(screen, inos):
     """create enemy's objects"""
+
     ino = Ino(screen)
     ino_width = ino.rect.width
     number_ino_x = int((1000 - 2 * ino_width) / ino_width)

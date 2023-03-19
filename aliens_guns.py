@@ -36,6 +36,7 @@ def run():
             controls.update(background_image, screen, stats, score, ship, inos, bullets)
             controls.update_bullets(screen, stats, score, inos, bullets)
             controls.update_inos(stats, screen, score, ship, inos, bullets)
+
         else:
             # game over
             game_over_image = pygame.image.load("images/game_over.jpg")
