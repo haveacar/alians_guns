@@ -1,9 +1,12 @@
+import sys
+
 import pygame
 import controls
 from ship import Ship
 from pygame.sprite import Group
 from stats import Stats
 from scores import Scores
+import time
 
 
 def run():
@@ -33,6 +36,13 @@ def run():
             controls.update(background_image, screen, stats, score, ship, inos, bullets)
             controls.update_bullets(screen, stats, score, inos, bullets)
             controls.update_inos(stats, screen, score, ship, inos, bullets)
+        else:
+            # game over
+            game_over_image = pygame.image.load("images/game_over.jpg")
+            screen.blit(game_over_image, (220, 200))
+            pygame.display.update()
+            time.sleep(3)
+            sys.exit()
 
 
 if __name__ == '__main__':

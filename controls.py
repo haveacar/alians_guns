@@ -6,6 +6,7 @@ import time
 
 
 def events(screen, ship, bullets):
+    """events func"""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -70,7 +71,7 @@ def ship_kill(stats, screen, score, ship, inos, bullets):
         time.sleep(1)
     else:
         stats.run_game = False
-        sys.exit()
+
 
 
 def update_inos(stats, screen, score, ship, inos, bullets):
@@ -91,6 +92,7 @@ def inos_check(stats, screen,score,  ship, inos, bullets):
 
 
 def create_army(screen, inos):
+    """create enemy's objects"""
     ino = Ino(screen)
     ino_width = ino.rect.width
     number_ino_x = int((1000 - 2 * ino_width) / ino_width)
