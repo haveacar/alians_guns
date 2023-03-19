@@ -37,18 +37,12 @@ def run():
             controls.update_bullets(screen, stats, score, inos, bullets)
             controls.update_inos(stats, screen, score, ship, inos, bullets)
         else:
-            #game over
+            # game over
             game_over_image = pygame.image.load("images/game_over.jpg")
-            game_over = True
-            while game_over:
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        game_over = False
-
-                screen.blit(game_over_image, (0, 0))
-                pygame.display.update()
-                time.sleep(2)
-                sys.exit()
+            screen.blit(game_over_image, (220, 200))
+            pygame.display.update()
+            time.sleep(3)
+            sys.exit()
 
 
 if __name__ == '__main__':
