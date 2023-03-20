@@ -9,28 +9,9 @@ DATABASE_NAME = "sql7606287"
 TABLE_NAME = 'game'
 
 mail_user = ''
-SQL_QUERY = f'SELECT * FROM {TABLE_NAME} WHERE mail="{mail_user}";'
+
 # font
 FONT = ("Ariel", 18)
-
-"""def request(sql_req, result = False):
-    try:
-        with mysql.connector.connect(host=SQL_HOST,
-                                         user=DATABASE_USER,
-                                         password=DATABASE_PASSWORD,
-                                         database=DATABASE_NAME
-                                         ) as con:
-            # cursor object
-            cursor = con.cursor()
-            # execute query
-            cursor.execute(sql_req)
-            if result:
-                query_result = cursor.fetchall()
-                return query_result
-
-    except Exception as err:
-        print("Error: ", err)
-        return False"""
 
 
 class Login(Tk):
@@ -46,7 +27,6 @@ class Login(Tk):
 
         # Create labels and text input boxes for username and password
         self.username_label_email = Label(text="Email:", font=FONT)
-
         self.username_entry_email = Entry()
 
         self.username_label = Label(text="Username:", font=FONT)
@@ -78,7 +58,7 @@ class Login(Tk):
             with mysql.connector.connect(host=SQL_HOST,
                                          user=DATABASE_USER,
                                          password=DATABASE_PASSWORD,
-                                         database=DATABASE_NAME
+                                             database=DATABASE_NAME
                                          ) as con:
                 # cursor object
                 cursor = con.cursor()
@@ -105,7 +85,28 @@ class Login(Tk):
         self.reg_button.pack(after=self.sign_button)
 
     def reg_push(self):
-        pass
+
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+        email_user = self.username_entry_email.get()
+        if username != "" or password != "":
+
+            try:
+                with mysql.connector.connect(host=SQL_HOST,
+                                             user=DATABASE_USER,
+                                             password=DATABASE_PASSWORD,
+                                             database=DATABASE_NAME
+                                             ) as con:
+                    # cursor object
+                    cursor = con.cursor()
+                    # execute query
+                    cursor.execute(
+                    "INSERT INTO `game`(`id_user`, `email`, `name`, `password`, `score`)VALUES(NULL, %s, %s, %s, %s), (NULL, 'ghffhh', 'tytnn','emnbbail@user', 0);")
+
+            except EXCEPTION as err:
+                messagebox.showerror("Login Error", f"Invalid username or password{err}")
+            else:
+                messagebox.showinfo("Regi Successful", "You have successfully logged in!")
 
 
 login = Login()
