@@ -10,6 +10,8 @@ TABLE_NAME = 'game'
 
 mail_user = ''
 SQL_QUERY = f'SELECT * FROM {TABLE_NAME} WHERE mail="{mail_user}";'
+# font
+FONT = ("Ariel", 18)
 
 
 """def request(sql_req, result = False):
@@ -39,27 +41,44 @@ class Login(Tk):
 
         # set up window
         self.title("Login Page")
-        self.geometry("400x200")
+        self.geometry("600x300")
         self.resizable(False, False)
 
-        # Create labels and text input boxes for username and password
-        username_label = Label(text="Username:")
-        username_label.pack()
-        username_entry = Entry()
-        username_entry.pack()
+        #Create labels and text input boxes for username and password
+        self.username_label_email = Label(text="Email:", font=FONT)
 
-        password_label = Label(text="Password:")
-        password_label.pack()
-        password_entry = Entry(show="*")
-        password_entry.pack()
+        self.username_entry_email = Entry()
 
-        login_button = Button(text="Login", command=self.login_push)
-        login_button.pack()
+
+        self.username_label = Label(text="Username:", font=FONT)
+        self.username_label.pack()
+        self.username_entry = Entry()
+        self.username_entry.pack()
+
+        self.password_label = Label(text="Password:", font=FONT)
+        self.password_label.pack()
+        self.password_entry = Entry(show="*")
+        self.password_entry.pack()
+
+        self.login_button = Button(text="Login", command=self.login_push, font=FONT, width=3)
+        self.login_button.pack()
+        self.sign_button = Button(text="Sign", font=FONT, width=3, command=self.sign_push)
+        self.sign_button.pack()
+        self.reg_button = Button(text="Registrate", font=FONT, width=7)
+
 
         self.mainloop()
 
     def login_push(self):
         pass
+
+    def sign_push(self):
+        """sign push button"""
+        self.username_label_email.pack(before=self.username_label)
+        self.username_entry_email.pack(before=self.username_label)
+        self.sign_button.config(state="disabled")
+        self.reg_button.pack(after=self.sign_button)
+
 
 
 login= Login()
