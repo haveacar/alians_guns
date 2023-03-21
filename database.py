@@ -35,7 +35,7 @@ class Login(Tk):
         self.username_entry_email = Entry()
         self.username_entry_email.pack()
 
-        self.username_label = Label(text="Name:", font=FONT)
+        self.username_label = Label(text="Name:", font=FONT, background=YELLOW, foreground='red')
         self.username_entry = Entry()
 
 
@@ -43,7 +43,7 @@ class Login(Tk):
         self.login_button.pack()
         self.sign_button = Button(text="New Game", font=FONT, width=7, command=self.sign_push)
         self.sign_button.pack()
-        self.reg_button = Button(text="Registration", font=FONT, width=7, command=self.registration)
+        self.reg_button = Button(text="Registration", font=FONT, width=9, command=self.registration)
 
 
         self.mainloop()
@@ -90,9 +90,29 @@ class Login(Tk):
         self.reg_button.pack()
 
     def registration(self):
+        # get from entry
         user_email = self.username_entry_email.get()
         user_name=self.username_entry.get()
-        pass
+        user_score =0
+        print(user_name)
+        print(user_email)
 
 
+        if len(user_email)==0 or len(user_name) == 0:
+            messagebox.showerror("Error", "You need something to write")
+
+        else:
+
+                with mysql.connector.connect(host=SQL_HOST,
+                                             user=DATABASE_USER,
+                                             password=DATABASE_PASSWORD,
+                                             database=DATABASE_NAME
+                                             ) as con:
+                    # cursor object
+                    cursor = con.cursor()
+                    # execute query
+                    cursor.execute("INSERT INTO game (email, name, score) VALUES (%s, %s, %s)", (user_email, user_name, user_score))
+
+                messagebox.showinfo("Registration Successful",
+                                    f"You have successfully registered\n{user_name}\nStart Play")
 login = Login()
