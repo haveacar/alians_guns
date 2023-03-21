@@ -76,7 +76,7 @@ class Login(Tk):
                 # Check if password matches password hash from database
                 if result:
                     # Allow user to log in
-                    messagebox.showinfo("Login Successful", "You have successfully logged in!")
+                    messagebox.showinfo("Login Successful", f"You have successfully logged in!\n{result[2]}\nYour MAX score: {result[3]}")
                 else:
                     # Display error message if password is incorrect
                     messagebox.showerror("Login Error", "Invalid username or password.")
@@ -90,6 +90,8 @@ class Login(Tk):
         self.reg_button.pack()
 
     def registration(self):
+        user_email = self.username_entry_email.get()
+        user_name=self.username_entry.get()
         pass
 
 
