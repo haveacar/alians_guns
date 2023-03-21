@@ -45,6 +45,10 @@ class Login(Tk):
         self.sign_button.pack()
         self.reg_button = Button(text="Registration", font=FONT, width=9, command=self.registration)
 
+        # start game flag
+        self.flag_game= FALSE
+        self.max_score = 0
+
 
         self.mainloop()
 
@@ -53,6 +57,7 @@ class Login(Tk):
 
         # Retrieve username and password from text input boxes
         user_email = self.username_entry_email.get()
+        # check case empty input
         if len(user_email)==0:
             messagebox.showerror("Error", "You need something to write")
 
@@ -76,7 +81,10 @@ class Login(Tk):
                 # Check if password matches password hash from database
                 if result:
                     # Allow user to log in
-                    messagebox.showinfo("Login Successful", f"You have successfully logged in!\n{result[2]}\nYour MAX score: {result[3]}")
+                    messagebox.showinfo("Login Successful", f"You have successfully logged in!\n{result[1]}\nYour MAX score: {result[2]}")
+                    self.flag_game = True
+                    self.max_score =int(result[2])
+                    print(self.max_score)
                 else:
                     # Display error message if password is incorrect
                     messagebox.showerror("Login Error", "Invalid username or password.")
@@ -94,15 +102,12 @@ class Login(Tk):
         user_email = self.username_entry_email.get()
         user_name=self.username_entry.get()
         user_score =0
-        print(user_name)
-        print(user_email)
 
-
+        # check case empty input
         if len(user_email)==0 or len(user_name) == 0:
             messagebox.showerror("Error", "You need something to write")
 
         else:
-
                 with mysql.connector.connect(host=SQL_HOST,
                                              user=DATABASE_USER,
                                              password=DATABASE_PASSWORD,
@@ -115,4 +120,6 @@ class Login(Tk):
 
                 messagebox.showinfo("Registration Successful",
                                     f"You have successfully registered\n{user_name}\nStart Play")
-login = Login()
+
+    def high_score(self):
+        return self.max_score

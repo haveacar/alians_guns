@@ -7,9 +7,11 @@ from pygame.sprite import Group
 from stats import Stats
 from scores import Scores
 import time
+from database import *
 
 
-def run():
+
+def run(max_score):
     """main func"""
     pygame.init()
     # set up screen
@@ -25,8 +27,10 @@ def run():
     bullets = Group()
     inos = Group()
     controls.create_army(screen, inos)
-    stats = Stats()
+    stats = Stats(max_score)
     score = Scores(screen, stats)
+
+
 
     # main loop
     while True:
@@ -47,4 +51,9 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
+    login = Login() # init object class login
+
+    # check flag
+    if login.flag_game:
+        mx_score=login.high_score()
+        run(mx_score)
