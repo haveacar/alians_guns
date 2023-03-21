@@ -54,6 +54,7 @@ class Login(Tk):
 
 
     def login_push(self):
+        """Func Login, get entry and Mysql request"""
 
         # Retrieve username and password from text input boxes
         user_email = self.username_entry_email.get()
@@ -91,6 +92,7 @@ class Login(Tk):
 
 
     def sign_push(self):
+        """Func disable widgets and display widgets"""
         # widgets
         self.sign_button.config(state="disabled")
         self.username_label.pack(before=self.username_label_email)
@@ -98,6 +100,7 @@ class Login(Tk):
         self.reg_button.pack()
 
     def registration(self):
+        """Func Reg, get entry and Mysql request, Insert to database"""
         # get from entry
         user_email = self.username_entry_email.get()
         user_name=self.username_entry.get()
@@ -120,6 +123,11 @@ class Login(Tk):
 
                 messagebox.showinfo("Registration Successful",
                                     f"You have successfully registered\n{user_name}\nStart Play")
+                self.flag_game= True
 
     def high_score(self):
+        """
+        func return high score
+        :return: int(max score)
+        """
         return self.max_score
