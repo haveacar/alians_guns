@@ -114,3 +114,4 @@ def check_high_score(stats, sc):
     if stats.score > stats.high_score:
         stats.high_score = stats.score
         sc.image_high_score()
+

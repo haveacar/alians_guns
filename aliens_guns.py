@@ -1,5 +1,4 @@
 import sys
-
 import pygame
 import controls
 from ship import Ship
@@ -10,8 +9,7 @@ import time
 from database import *
 
 
-
-def run(max_score):
+def run(max_score, email_user):
     """main func"""
     pygame.init()
     # set up screen
@@ -27,10 +25,8 @@ def run(max_score):
     bullets = Group()
     inos = Group()
     controls.create_army(screen, inos)
-    stats = Stats(max_score)
+    stats = Stats(max_score, email_user)
     score = Scores(screen, stats)
-
-
 
     # main loop
     while True:
@@ -46,14 +42,15 @@ def run(max_score):
             game_over_image = pygame.image.load("images/game_over.jpg")
             screen.blit(game_over_image, (220, 200))
             pygame.display.update()
+            stats.update_sql()
             time.sleep(3)
             sys.exit()
 
 
 if __name__ == '__main__':
-    login = Login() # init object class login
+    login = Login()  # init object class login
 
     # check flag
     if login.flag_game:
-        mx_score=login.high_score()
-        run(mx_score)
+        mx_score, mail = login.high_score()
+        run(mx_score,mail)

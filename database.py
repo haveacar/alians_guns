@@ -15,7 +15,6 @@ FONT = ("Courier", 18)
 YELLOW = "#f7f5dd"
 
 
-
 class Login(Tk):
     """Class Login Page"""
 
@@ -38,7 +37,6 @@ class Login(Tk):
         self.username_label = Label(text="Name:", font=FONT, background=YELLOW, foreground='red')
         self.username_entry = Entry()
 
-
         self.login_button = Button(text="Login", command=self.login_push, font=FONT, width=3)
         self.login_button.pack()
         self.sign_button = Button(text="New Game", font=FONT, width=7, command=self.sign_push)
@@ -46,12 +44,11 @@ class Login(Tk):
         self.reg_button = Button(text="Registration", font=FONT, width=9, command=self.registration)
 
         # start game flag
-        self.flag_game= FALSE
+        self.flag_game = FALSE
         self.max_score = 0
-
+        self.mail = ""
 
         self.mainloop()
-
 
     def login_push(self):
         """Func Login, get entry and Mysql request"""
@@ -59,7 +56,7 @@ class Login(Tk):
         # Retrieve username and password from text input boxes
         user_email = self.username_entry_email.get()
         # check case empty input
-        if len(user_email)==0:
+        if len(user_email) == 0:
             messagebox.showerror("Error", "You need something to write")
 
         else:
@@ -68,7 +65,7 @@ class Login(Tk):
                 with mysql.connector.connect(host=SQL_HOST,
                                              user=DATABASE_USER,
                                              password=DATABASE_PASSWORD,
-                                                 database=DATABASE_NAME
+                                             database=DATABASE_NAME
                                              ) as con:
                     # cursor object
                     cursor = con.cursor()
@@ -82,14 +79,14 @@ class Login(Tk):
                 # Check if password matches password hash from database
                 if result:
                     # Allow user to log in
-                    messagebox.showinfo("Login Successful", f"You have successfully logged in!\n{result[1]}\nYour MAX score: {result[2]}")
+                    messagebox.showinfo("Login Successful",
+                                        f"You have successfully logged in!\n{result[1]}\nYour MAX score: {result[2]}")
                     self.flag_game = True
-                    self.max_score =int(result[2])
-                    print(self.max_score)
+                    self.max_score = int(result[2])
+                    self.mail = result[0]
                 else:
                     # Display error message if password is incorrect
                     messagebox.showerror("Login Error", "Invalid username or password.")
-
 
     def sign_push(self):
         """Func disable widgets and display widgets"""
@@ -103,31 +100,34 @@ class Login(Tk):
         """Func Reg, get entry and Mysql request, Insert to database"""
         # get from entry
         user_email = self.username_entry_email.get()
-        user_name=self.username_entry.get()
-        user_score =0
+        user_name = self.username_entry.get()
+        user_score = 0
 
         # check case empty input
-        if len(user_email)==0 or len(user_name) == 0:
+        if len(user_email) == 0 or len(user_name) == 0:
             messagebox.showerror("Error", "You need something to write")
 
         else:
-                with mysql.connector.connect(host=SQL_HOST,
-                                             user=DATABASE_USER,
-                                             password=DATABASE_PASSWORD,
-                                             database=DATABASE_NAME
-                                             ) as con:
-                    # cursor object
-                    cursor = con.cursor()
-                    # execute query
-                    cursor.execute("INSERT INTO game (email, name, score) VALUES (%s, %s, %s)", (user_email, user_name, user_score))
+            with mysql.connector.connect(host=SQL_HOST,
+                                         user=DATABASE_USER,
+                                         password=DATABASE_PASSWORD,
+                                         database=DATABASE_NAME
+                                         ) as con:
+                # cursor object
+                cursor = con.cursor()
+                # execute query
+                cursor.execute("INSERT INTO game (email, name, score) VALUES (%s, %s, %s)",
+                               (user_email, user_name, user_score))
 
-                messagebox.showinfo("Registration Successful",
-                                    f"You have successfully registered\n{user_name}\nStart Play")
-                self.flag_game= True
+            messagebox.showinfo("Registration Successful",
+                                f"You have successfully registered\n{user_name}\nStart Play")
+            self.flag_game = True
+            self.mail = user_email
 
     def high_score(self):
         """
         func return high score
         :return: int(max score)
         """
-        return self.max_score
+        print("max_data base",self.max_score)
+        return self.max_score, self.mail
