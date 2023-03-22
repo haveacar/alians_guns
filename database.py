@@ -129,5 +129,5 @@ class Login(Tk):
         func return high score
         :return: int(max score)
         """
-        print("max_data base",self.max_score)
+
         return self.max_score, self.mail

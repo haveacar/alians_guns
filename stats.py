@@ -24,6 +24,8 @@ class Stats:
         self.score = 0  # round score
 
     def update_sql(self):
+        score_m= self.high_score
+        print("!!!!!", score_m)
         with mysql.connector.connect(host=SQL_HOST,
                                      user=DATABASE_USER,
                                      password=DATABASE_PASSWORD,
@@ -32,4 +34,5 @@ class Stats:
             # cursor object
             cursor = con.cursor()
             # execute query
-            cursor.execute("UPDATE game SET score = %s WHERE email = %s", (self.high_score, self.user_mail))
+            cursor.execute("UPDATE game SET score = %s WHERE email = %s", (score_m, self.user_mail))
+
