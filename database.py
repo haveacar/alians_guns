@@ -2,7 +2,7 @@ import pathlib
 import sqlite3
 from tkinter import *
 import tkinter.messagebox as messagebox
-
+import re
 mail_user = ''
 
 # constants
@@ -115,6 +115,18 @@ class Login(Tk):
 
     def registration(self):
         """Func Reg, get entry and Mysql request, Insert to database"""
+
+        def is_valid_email(email:str)->bool:
+            # Regular expression to match valid email addresses
+            pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+
+            # Use the regular expression to check if the email address matches the pattern
+            match = re.match(pattern, email)
+
+            # Return True if the email address is valid, False otherwise
+            return bool(match)
+
+
         # get from entry
         user_email = self.username_entry_email.get()
         user_name = self.username_entry.get()
@@ -125,17 +137,21 @@ class Login(Tk):
             messagebox.showerror("Error", "You need something to write")
 
         else:
+            # email validation
+            if is_valid_email(user_email):
 
-            request = f"""INSERT OR REPLACE INTO "game" ("email","name","score") VALUES ("$mail$","$name$", {user_score});"""
-            request = request.replace('$mail$', user_email)
-            request = request.replace('$name$', user_name)
+                request = f"""INSERT OR REPLACE INTO "game" ("email","name","score") VALUES ("$mail$","$name$", {user_score});"""
+                request = request.replace('$mail$', user_email)
+                request = request.replace('$name$', user_name)
 
-            self.sql_request(request, query_result=False)
-            messagebox.showinfo("Registration Successful",
-                                f"You have successfully registered\n{user_name.upper()}\nStart Play")
-            self.flag_game = True
-            self.mail = user_email
-            self.name= user_name
+                self.sql_request(request, query_result=False)
+                messagebox.showinfo("Registration Successful",
+                                    f"You have successfully registered\n{user_name.upper()}\nStart Play")
+                self.flag_game = True
+                self.mail = user_email
+                self.name= user_name
+
+            else: messagebox.showerror("Error", "Email is not valid:(")
 
     def high_score(self):
         """
