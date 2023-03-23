@@ -40,7 +40,7 @@ class Login(Tk):
         self.sign_button = Button(text="New Game", font=FONT, width=7, command=self.sign_push)
         self.sign_button.pack()
         self.reg_button = Button(text="Registration", font=FONT, width=9, command=self.registration)
-
+        Label(text="© Daniel Govnir", font=FONT, background=YELLOW, foreground='red').pack(side="bottom", pady=5)
         # start game flag
         self.flag_game = FALSE
         self.max_score = 0
@@ -101,6 +101,7 @@ class Login(Tk):
                 self.max_score = int(result[0][2])
                 self.mail = result[0][0]
                 self.name = result[0][1]
+                self.destroy()
             else:
                 # Display error message if password is incorrect
                 messagebox.showerror("Login Error", "Invalid username or password.")
@@ -117,6 +118,7 @@ class Login(Tk):
         """Func Reg, get entry and Mysql request, Insert to database"""
 
         def is_valid_email(email:str)->bool:
+            """Func to check mail validation"""
             # Regular expression to match valid email addresses
             pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
@@ -150,6 +152,7 @@ class Login(Tk):
                 self.flag_game = True
                 self.mail = user_email
                 self.name= user_name
+                self.destroy()
 
             else: messagebox.showerror("Error", "Email is not valid:(")
 
