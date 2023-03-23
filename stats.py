@@ -1,11 +1,6 @@
-# constans
-SQL_HOST = "sql7.freesqldatabase.com"
-DATABASE_USER = "sql7606287"
-DATABASE_PASSWORD = "kGMMHFUyl6"
-DATABASE_NAME = "sql7606287"
-TABLE_NAME = 'game'
 
-import mysql.connector
+
+
 
 
 class Stats:
@@ -26,13 +21,5 @@ class Stats:
     def update_sql(self):
         score_m= self.high_score
         print("!!!!!", score_m)
-        with mysql.connector.connect(host=SQL_HOST,
-                                     user=DATABASE_USER,
-                                     password=DATABASE_PASSWORD,
-                                     database=DATABASE_NAME
-                                     ) as con:
-            # cursor object
-            cursor = con.cursor()
-            # execute query
-            cursor.execute("UPDATE game SET score = %s WHERE email = %s", (score_m, self.user_mail))
+
 

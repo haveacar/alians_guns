@@ -1,18 +1,16 @@
-import mysql.connector
+import pathlib
+import sqlite3
 from tkinter import *
 import tkinter.messagebox as messagebox
-
-SQL_HOST = "sql7.freesqldatabase.com"
-DATABASE_USER = "sql7606287"
-DATABASE_PASSWORD = "kGMMHFUyl6"
-DATABASE_NAME = "sql7606287"
-TABLE_NAME = 'game'
 
 mail_user = ''
 
 # constants
 FONT = ("Courier", 18)
 YELLOW = "#f7f5dd"
+
+# database patch
+DB_URL = pathlib.Path(__file__).parent.joinpath("data.db")
 
 
 class Login(Tk):
@@ -50,6 +48,31 @@ class Login(Tk):
 
         self.mainloop()
 
+    def sql_request(self, n_cursor, query_result=False):
+        """
+        sql request func
+        :param n_cursor: string sql request
+        """
+
+        try:
+            with sqlite3.connect(DB_URL) as sqlite_connection:  # Connect to database
+                # Create cursor object
+                cursor = sqlite_connection.cursor()
+                # Execute SQL query
+                cursor.execute(n_cursor)
+                # Fetch result
+                if query_result:
+                    res = cursor.fetchall()
+                else:
+                    res = None
+                pass
+                return res
+        except sqlite3.Error as err:
+            print("******", err)
+            messagebox.showerror("Error", f"Error: {err}")
+        else:
+            print("***Complete***")
+
     def login_push(self):
         """Func Login, get entry and Mysql request"""
 
@@ -60,33 +83,24 @@ class Login(Tk):
             messagebox.showerror("Error", "You need something to write")
 
         else:
-            # Query MySQL database to check if entered credentials are valid
-            try:
-                with mysql.connector.connect(host=SQL_HOST,
-                                             user=DATABASE_USER,
-                                             password=DATABASE_PASSWORD,
-                                             database=DATABASE_NAME
-                                             ) as con:
-                    # cursor object
-                    cursor = con.cursor()
-                    # execute query
-                    cursor.execute("SELECT * FROM game WHERE email=%s ", (user_email,))
-                    result = cursor.fetchone()
-                    print(result)
-            except EXCEPTION as err:
-                messagebox.showerror("Error", f"Error: {err}")
+            # select sql request
+            request = f'''SELECT * from "game"
+                                where email  = '$mail$';'''
+            request = request.replace('$mail$', user_email)
+
+            result = self.sql_request(request, query_result=True)
+
+            # Check if password matches password hash from database
+            if result:
+                # Allow user to log in
+                messagebox.showinfo("Login Successful",
+                                    f"You have successfully logged in!\n{result[1]}\nYour MAX score: {result[2]}")
+                self.flag_game = True
+                self.max_score = int(result[2])
+                self.mail = result[0]
             else:
-                # Check if password matches password hash from database
-                if result:
-                    # Allow user to log in
-                    messagebox.showinfo("Login Successful",
-                                        f"You have successfully logged in!\n{result[1]}\nYour MAX score: {result[2]}")
-                    self.flag_game = True
-                    self.max_score = int(result[2])
-                    self.mail = result[0]
-                else:
-                    # Display error message if password is incorrect
-                    messagebox.showerror("Login Error", "Invalid username or password.")
+                # Display error message if password is incorrect
+                messagebox.showerror("Login Error", "Invalid username or password.")
 
     def sign_push(self):
         """Func disable widgets and display widgets"""
@@ -108,19 +122,14 @@ class Login(Tk):
             messagebox.showerror("Error", "You need something to write")
 
         else:
-            with mysql.connector.connect(host=SQL_HOST,
-                                         user=DATABASE_USER,
-                                         password=DATABASE_PASSWORD,
-                                         database=DATABASE_NAME
-                                         ) as con:
-                # cursor object
-                cursor = con.cursor()
-                # execute query
-                cursor.execute("INSERT INTO game (email, name, score) VALUES (%s, %s, %s)",
-                               (user_email, user_name, user_score))
 
+            request = f"""INSERT OR REPLACE INTO "game" ("email","name","score") VALUES ("$mail$","$name$", {user_score});"""
+            request = request.replace('$mail$', user_email)
+            request = request.replace('$name$', user_name)
+
+            self.sql_request(request, query_result=False)
             messagebox.showinfo("Registration Successful",
-                                f"You have successfully registered\n{user_name}\nStart Play")
+                                f"You have successfully registered\n{user_name.upper()}\nStart Play")
             self.flag_game = True
             self.mail = user_email
 
