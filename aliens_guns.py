@@ -54,3 +54,4 @@ if __name__ == '__main__':
     if login.flag_game:
         mx_score, mail, name = login.high_score()
         run(mx_score, mail, name)
+
