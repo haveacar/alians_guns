@@ -1,5 +1,4 @@
 import sys
-
 import pygame
 import controls
 from ship import Ship
@@ -7,9 +6,10 @@ from pygame.sprite import Group
 from stats import Stats
 from scores import Scores
 import time
+from database import *
 
 
-def run():
+def run(max_score, email_user, name_user):
     """main func"""
     pygame.init()
     # set up screen
@@ -25,7 +25,7 @@ def run():
     bullets = Group()
     inos = Group()
     controls.create_army(screen, inos)
-    stats = Stats()
+    stats = Stats(max_score, email_user, name_user)
     score = Scores(screen, stats)
 
     # main loop
@@ -36,14 +36,22 @@ def run():
             controls.update(background_image, screen, stats, score, ship, inos, bullets)
             controls.update_bullets(screen, stats, score, inos, bullets)
             controls.update_inos(stats, screen, score, ship, inos, bullets)
+
         else:
             # game over
             game_over_image = pygame.image.load("images/game_over.jpg")
             screen.blit(game_over_image, (220, 200))
             pygame.display.update()
+            stats.update_sql()
             time.sleep(3)
             sys.exit()
 
 
 if __name__ == '__main__':
-    run()
+    login = Login()  # init object class login
+
+    # check flag
+    if login.flag_game:
+        mx_score, mail, name = login.high_score()
+        run(mx_score, mail, name)
+

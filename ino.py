@@ -13,11 +13,13 @@ class Ino(pygame.sprite.Sprite):
         self.x = float(self.rect.x)
         self.y = float(self.rect.y)
 
+
     def draw(self):
         """draw enemy"""
         self.screen.blit(self.image, self.rect)
 
     def update(self):
         """moving enemy"""
-        self.y += 0.2
+
+        self.y += 0.4
         self.rect.y = self.y
