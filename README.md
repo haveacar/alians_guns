@@ -8,4 +8,4 @@
     <li>To Fire &nbsp;using <strong>SPACE</strong> key</li>
     <li>Destroy all enemies to win the game</li>
 </ul>
-<p><a href="http://![](https://github.com/haveacar/alians_guns/blob/d0ac3445dec94b7b0d57002a7f6df169be541563/screenshot.jpg)">Screenshot</a></p>
+<p><a href="https://github.com/haveacar/alians_guns/blob/master/screenshot.jpg">Screenshoot</a></p>
