@@ -9,7 +9,7 @@ import time
 from database import *
 
 
-def run(max_score, email_user):
+def run(max_score, email_user, name_user):
     """main func"""
     pygame.init()
     # set up screen
@@ -25,7 +25,7 @@ def run(max_score, email_user):
     bullets = Group()
     inos = Group()
     controls.create_army(screen, inos)
-    stats = Stats(max_score, email_user)
+    stats = Stats(max_score, email_user, name_user)
     score = Scores(screen, stats)
 
     # main loop
@@ -52,5 +52,5 @@ if __name__ == '__main__':
 
     # check flag
     if login.flag_game:
-        mx_score, mail = login.high_score()
-        run(mx_score,mail)
+        mx_score, mail, name = login.high_score()
+        run(mx_score, mail, name)

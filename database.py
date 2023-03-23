@@ -45,6 +45,7 @@ class Login(Tk):
         self.flag_game = FALSE
         self.max_score = 0
         self.mail = ""
+        self.name = ""
 
         self.mainloop()
 
@@ -89,15 +90,17 @@ class Login(Tk):
             request = request.replace('$mail$', user_email)
 
             result = self.sql_request(request, query_result=True)
+            print(result)
 
             # Check if password matches password hash from database
             if result:
                 # Allow user to log in
                 messagebox.showinfo("Login Successful",
-                                    f"You have successfully logged in!\n{result[1]}\nYour MAX score: {result[2]}")
+                                    f"You have successfully logged in!\n{result[0][1]}\nYour MAX score: {result[0][2]}")
                 self.flag_game = True
-                self.max_score = int(result[2])
-                self.mail = result[0]
+                self.max_score = int(result[0][2])
+                self.mail = result[0][0]
+                self.name = result[0][1]
             else:
                 # Display error message if password is incorrect
                 messagebox.showerror("Login Error", "Invalid username or password.")
@@ -132,6 +135,7 @@ class Login(Tk):
                                 f"You have successfully registered\n{user_name.upper()}\nStart Play")
             self.flag_game = True
             self.mail = user_email
+            self.name= user_name
 
     def high_score(self):
         """
@@ -139,4 +143,4 @@ class Login(Tk):
         :return: int(max score)
         """
 
-        return self.max_score, self.mail
+        return self.max_score, self.mail, self.name
